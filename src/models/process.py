@@ -16,5 +16,5 @@ class Process:
         self.turnaround_time = self.completion_time - self.Arrival_Time
         self.waiting_time = self.turnaround_time - self.Burst_Time
 
-   def __repr__(self):
+    def __repr__(self):
         return f"Process({self.PID}, AT={self.Arrival_Time}, BT={self.Burst_Time})"
