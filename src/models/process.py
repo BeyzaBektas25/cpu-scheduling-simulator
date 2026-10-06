@@ -1,8 +1,9 @@
 class Process:
-    def _init_(self, pid: int, arrival_time: int, burst_time: int):
-        self.pid = pid
-        self.arrival_time = arrival_time
-        self.burst_time = burst_time
+    def __init__(self, PID, Arrival_Time, Burst_Time, Priority=0):
+        self.PID=PID
+        self.Arrival_Time = Arrival_Time
+        self.Burst_Time = Burst_Time
+        self.Priority=Priority
         
         # Çalışma sırasında hesaplanacak metrikler
         self.remaining_time = burst_time  
@@ -12,8 +13,8 @@ class Process:
         self.response_time = -1  # Henüz CPU'yu almadığını gösterir
         
     def calculate_metrics(self):
-        self.turnaround_time = self.completion_time - self.arrival_time
-        self.waiting_time = self.turnaround_time - self.burst_time
+        self.turnaround_time = self.completion_time - self.Arrival_Time
+        self.waiting_time = self.turnaround_time - self.Burst_Time
 
-    def _repr_(self):
-        return f"Process(PID={self.pid}, AT={self.arrival_time}, BT={self.burst_time})"
+   def __repr__(self):
+        return f"Process({self.PID}, AT={self.Arrival_Time}, BT={self.Burst_Time})"
