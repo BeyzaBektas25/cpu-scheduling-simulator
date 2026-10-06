@@ -5,8 +5,8 @@ import os
 # src klasöründeki kodları import edebilmek için yol tanımı yapıyoruz
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from process import Process
-from fcfs import run_fcfs
+from src.process import Process
+from src.fcfs import run_fcfs
 
 class TestFCFSAlgorithm(unittest.TestCase):
 
