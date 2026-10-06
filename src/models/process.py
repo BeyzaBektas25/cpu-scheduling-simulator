@@ -6,7 +6,7 @@ class Process:
         self.Priority=Priority
         
         # Çalışma sırasında hesaplanacak metrikler
-        self.remaining_time = burst_time  
+        self.remaining_time = Burst_Time  
         self.completion_time = 0
         self.turnaround_time = 0
         self.waiting_time = 0
