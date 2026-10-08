@@ -4,36 +4,6 @@ def round_robin(processes, quantum):
     if quantum <= 0:
         raise ValueError("Quantum pozitif olmalıdır.")
 
-    ready_queue = deque()   ##processler kuyruğa alınır.
-    current_time = 0
-    next_index = 0   ##ready queue'ya eklenmemiş ilk processin listedeki yerini gösteriyor.
-
-    for process in processes:
-        if process.Arrival_Time <= current_time:
-            ready_queue.append(process)
-
-    while ready_queue:
-        process = ready_queue.popleft()
-
-        run_time = min(quantum, process.remaining_time)
-
-        process.remaining_time -= run_time
-        current_time += run_time
-
-        for new_process in processes:
-            if new_process.Arrival_Time <= current_time and new_process not in ready_queue:
-                ready_queue.append(new_process)
-
-        if process.remaining_time > 0:
-            ready_queue.append(process)
-"""
-from collections import deque
-
-
-def round_robin(processes, quantum):
-    if quantum <= 0:
-        raise ValueError("Quantum pozitif olmalıdır.")
-
     ready_queue = deque()
     current_time = 0
     next_index = 0
@@ -55,18 +25,21 @@ def round_robin(processes, quantum):
             ready_queue.append(processes[next_index])
             next_index += 1
 
+        # Kuyruğun başındaki process'i al
         process = ready_queue.popleft()
 
-        # İlk kez CPU alıyorsa response time
+        # İlk kez CPU alıyorsa response time hesapla
         if process.response_time == -1:
             process.response_time = current_time - process.Arrival_Time
 
+        # Process'in bu turda ne kadar çalışacağını belirle
         run_time = min(quantum, process.remaining_time)
 
         start_time = current_time
         current_time += run_time
         process.remaining_time -= run_time
 
+        # Gantt chart'a ekle
         gantt_chart.append(
             (process.PID, start_time, current_time)
         )
@@ -79,12 +52,14 @@ def round_robin(processes, quantum):
             ready_queue.append(processes[next_index])
             next_index += 1
 
-        # Process tamamlanmadıysa kuyruğun sonuna gönder
+        # Process tamamlanmadıysa kuyunun sonuna gönder
         if process.remaining_time > 0:
             ready_queue.append(process)
+
+        # Process tamamlandıysa
         else:
             process.completion_time = current_time
             process.calculate_metrics()
 
     return processes, gantt_chart
-    """
+
