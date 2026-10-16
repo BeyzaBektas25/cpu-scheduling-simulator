@@ -6,7 +6,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from src.models.process import Process
-from src.models.sjf import sjf
+from src.models.sjf import run_sjf
 
 class TestSJFAlgorithm(unittest.TestCase):
 
