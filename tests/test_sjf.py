@@ -5,8 +5,8 @@ import os
 # src klasöründeki kodları import edebilmek için yol tanımı yapıyoruz
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from src.process import Process
-from src.sjf import run_sjf
+from src.models.process import Process
+from src.models.sjf import run_sjf
 
 class TestSJFAlgorithm(unittest.TestCase):
 
