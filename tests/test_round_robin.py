@@ -4,8 +4,8 @@ import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from src.process import Process
-from src.round_robin import round_robin
+from src.models.process import Process
+from src.models.round_robin import round_robin
 
 class TestRoundRobinAlgorithm(unittest.TestCase):
 
