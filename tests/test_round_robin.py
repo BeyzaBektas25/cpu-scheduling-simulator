@@ -5,7 +5,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from src.process import Process
-from src.round_robin import run_round_robin
+from src.round_robin import round_robin
 
 class TestRoundRobinAlgorithm(unittest.TestCase):
 
@@ -19,14 +19,15 @@ class TestRoundRobinAlgorithm(unittest.TestCase):
             Process("P2", 1, 3)
         ]
         
-        completed, gantt = run_round_robin(processes, time_quantum=2)
+        completed, gantt = round_robin(processes, quantum=2)
         
         # Gantt şeması sırasıyla: P1(0-2) -> P2(2-4) -> P1(4-6) -> P2(6-7) -> P1(7-8) olmalı
         expected_gantt = [
             ("P1", 0, 2),
             ("P2", 2, 4),
             ("P1", 4, 6),
-            ("P2", 4, 7), # Not: Kodun yapısına göre tam aralıklar eşleşmeli
+            ("P2", 6, 7),
+            ("P1", 7, 8)  # Not: Kodun yapısına göre tam aralıklar eşleşmeli
         ]
         
         # Gantt şemasında ilk iki adımın doğruluğunu teyit edelim
