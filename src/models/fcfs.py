@@ -4,7 +4,7 @@ def run_fcfs(process_list):
     Girdi olarak Process nesnelerinden oluşan bir liste alır.
     """
     # 1. Prosesleri varış zamanlarına göre sırala (Eğer eşitse geliş sırasına göre kalırlar)
-    sorted_processes = sorted(process_list, key=lambda p: p.Arrival_Time)
+    sorted_processes = sorted(process_list, key=lambda p: (p.Arrival_Time, p.PID))
     
     current_time = 0  # Simülasyon zaman sayacı
     gantt_chart = []  # Görsel şema oluşturmak için zaman logları
