@@ -27,7 +27,7 @@ def run_sjf(process_list):
 
         # Available listesindeki proseslerden Burst_Time'ı en kısa olanı seç
        
-        selected = min(available, key=lambda p: p.Burst_Time)
+        selected = min(available, key=lambda p: (p.Burst_Time, p.Arrival_Time, p.PID))
 
         # Prosesi çalıştır
         start_time = current_time
