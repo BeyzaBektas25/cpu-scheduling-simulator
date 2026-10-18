@@ -60,5 +60,19 @@ class TestSJFAlgorithm(unittest.TestCase):
         p1 = next(p for p in completed if p.PID == "P1")
         self.assertEqual(p1.completion_time, 7)
 
+    def test_sjf_tie_break(self):
+        """İşlem süreleri ve geliş zamanları eşitse küçük PID'yi seçer."""
+        processes = [
+            Process("P2", 0, 3),
+            Process("P1", 0, 3)
+        ]
+
+        completed, gantt = run_sjf(processes)
+
+        execution_order = [item[0] for item in gantt]
+
+        self.assertEqual(execution_order, ["P1", "P2"])
+
+
 if __name__ == "__main__":
     unittest.main()
