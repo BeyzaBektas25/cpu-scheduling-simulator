@@ -1,6 +1,5 @@
 from tkinter import CURRENT
 
-
 def run_priority(process_list):
     #küçük priority değeri daha önce işleneceği anlamına gelir.
 
