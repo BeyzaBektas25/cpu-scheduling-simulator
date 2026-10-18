@@ -25,8 +25,7 @@ def run_priority(process_list):
             continue
 
         # Priority değeri en küçük olan processi seç
-        selected = min(available, key=lambda p: (p.Priority, p.Arrival_Time, p.PID)
-)
+        selected = min(available, key=lambda p: (p.Priority, p.Arrival_Time, p.PID))
 
         #process tamamlanana kadar çalıştır (non-preemptive)
         start_time = current_time
