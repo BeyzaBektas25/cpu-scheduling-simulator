@@ -1,0 +1,98 @@
+"""
+from collections import deque
+
+def round_robin(processes, quantum):
+    if quantum <= 0:
+        raise ValueError("Quantum pozitif olmalıdır.")
+
+    ready_queue = deque()   ##processler kuyruğa alınır.
+    current_time = 0
+    next_index = 0   ##ready queue'ya eklenmemiş ilk processin listedeki yerini gösteriyor.
+
+    for process in processes:
+        if process.arrival_time <= current_time:
+            ready_queue.append(process)
+
+    while ready_queue:
+        process = ready_queue.popleft()
+
+        run_time = min(quantum, process.remaining_time)
+
+        process.remaining_time -= run_time
+        current_time += run_time
+
+        for new_process in processes:
+            if new_process.arrival_time <= current_time and new_process not in ready_queue:
+                ready_queue.append(new_process)
+
+        if process.remaining_time > 0:
+            ready_queue.append(process)
+"""
+from collections import deque
+
+def round_robin(processes, quantum):
+    if quantum <= 0:
+        raise ValueError("Quantum pozitif olmalıdır.")
+
+    ready_queue = deque()
+    current_time = 0
+    next_index = 0
+    gantt_chart = []
+
+    # Determinizm için Arrival_Time aynıysa PID'ye göre sırala
+    processes = sorted(processes, key=lambda p: (p.Arrival_Time, p.PID))
+
+    while next_index < len(processes) or ready_queue:
+
+        # Kuyruk boşsa, zamanı bir sonraki process'in gelişine götür
+        if not ready_queue:
+            if current_time < processes[next_index].Arrival_Time:
+                gantt_chart.append(
+                    ("IDLE", current_time, processes[next_index].Arrival_Time)
+                )
+                current_time = processes[next_index].Arrival_Time
+
+            # DÜZELTME: O anki zamanda (current_time) gelen TÜM prosesleri kuyruğa ekle
+            while (
+                next_index < len(processes)
+                and processes[next_index].Arrival_Time <= current_time
+            ):
+                ready_queue.append(processes[next_index])
+                next_index += 1
+
+        # Kuyruğun başındaki process alınıyor
+        process = ready_queue.popleft()
+
+        # İlk kez CPU alıyorsa response time hesapla
+        if process.response_time == -1:
+            process.response_time = current_time - process.Arrival_Time
+
+        # Process'in bu turda ne kadar çalışacağı belirleniyor
+        run_time = min(quantum, process.remaining_time)
+
+        start_time = current_time  # başlangıç zamanını kaydediyoruz
+        current_time += run_time
+        process.remaining_time -= run_time
+
+        # Gantt şemasına ekleniyor
+        gantt_chart.append(
+            (process.PID, start_time, current_time)
+        )
+
+        # Bu çalışma süresinde gelen yeni processleri kuyruğa ekle
+        while (
+            next_index < len(processes)
+            and processes[next_index].Arrival_Time <= current_time
+        ):
+            ready_queue.append(processes[next_index])
+            next_index += 1
+
+        # Process tamamlanmadıysa kuyruğun sonuna gönder
+        if process.remaining_time > 0:
+            ready_queue.append(process)
+        else:
+            process.completion_time = current_time  # bitiş zamanı kaydediliyor
+            process.calculate_metrics()   # turnaround time, waiting time hesaplanılıyor
+
+    return processes, gantt_chart
+    

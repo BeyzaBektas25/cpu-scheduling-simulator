@@ -1,0 +1,32 @@
+Soru ve Kriterler Kontrol Listesi
+"Doğru ilerliyor muyuz?"
+
+Cevap: Evet! Projeyi sprintlere bölmeniz, görevleri paylaşmanız, modüler yapı kurmanız ve test yazmanız endüstri standartlarında %100 doğru bir yazılım geliştirme sürecidir.
+
+"Entegrasyon nasıl olur?"
+
+Cevap: Ortak bir Process sınıfı üzerinden, her algoritmanın (FCFS, SJF, RR, SRTF) aynı girdiyi alıp [completed_processes, gantt_chart] döndüren fonksiyonlar olması sayesinde entegrasyonun çok kolay olacağını konuştuk ve örnek bir main.py iskeleti çıkardık.
+
+• Preemption doğru mu?
+
+Cevap: Evet. Yazdığımız SRTF kodunda her 1 zaman biriminde hazır kuyruğu tekrar tarandığı için yeni gelen daha kısa proses anında öne geçiyor.
+
+• remaining_time doğru azalıyor mu?
+
+Cevap: Evet. Aktif proses her 1 saniyelik CPU çalışmasında remaining_time -= 1 şeklinde doğru şekilde azaltılıyor.
+
+• CT (Completion Time) yalnızca tamamlanınca atanıyor mu?
+
+Cevap: Evet. Süre sıfırlanmadığı sürece CT atanmıyor; yalnızca remaining_time == 0 olduğunda o anki current_time değerini alıyor.
+
+• RT (Response Time) ilk CPU kullanımında bir kez atanıyor mu?
+
+Cevap: Evet. response_time == -1 kontrolü sayesinde proses ilk kez CPU'ya çıktığı an hesaplanıp sabitleniyor, sonraki kesmelerde değişmiyor.
+
+• CPU idle doğru mu?
+
+Cevap: Evet. Hazır kuyruğunda proses kalmadığında veya henüz hiç proses gelmediğinde Gantt şemasına ("IDLE", start, end) şeklinde doğru aralıklar kaydediliyor.
+
+• Eşit remaining time durumunda deterministik tie-break var mı?
+
+Cevap: Evet. Sıralama kriterine eklediğimiz (remaining_time, Arrival_Time, PID) mantığıyla her çalıştırmada aynı ve tutarlı (deterministik) sonuç alınması sağlandı.
