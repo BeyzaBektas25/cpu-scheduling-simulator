@@ -1,3 +1,4 @@
+
 from src.models.process import Process
 from src.models.sjf import run_sjf
 
@@ -36,5 +37,5 @@ def main():
         print(item)
 
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     main()
