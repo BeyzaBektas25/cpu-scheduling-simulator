@@ -1,77 +1,79 @@
-# CPU Scheduling Simulator
+# ⚙️ CPU Scheduling Simulator — İşletim Sistemleri Zamanlama Simülatörü
 
-## Proje Hakkında
+**CPU Scheduling Simulator**, İşletim Sistemleri dersi kapsamında Python ile geliştirilmiş etkileşimli bir CPU zamanlama ve süreç analiz platformudur.
 
-CPU Scheduling Simulator, İşletim Sistemleri dersi kapsamında Python ile geliştirilen bir CPU zamanlama simülatörüdür. Projenin amacı, işletim sistemlerinde kullanılan CPU zamanlama algoritmalarını uygulamak ve süreçlerin çalışma sonuçlarını incelemektir.
+Bu simülatör; yalnızca sentetik verilerle değil, aynı zamanda **`psutil` kütüphanesi aracılığıyla bilgisayarınızda (Windows/Linux) o an çalışan gerçek işletim sistemi süreçlerini canlı çekerek** 5 farklı CPU zamanlama algoritmasını karşılaştırmalı olarak analiz eder.
 
-## Mevcut Özellikler
+---
 
-- **Process Model:** Süreçlerin temel bilgilerini ve zamanlama metriklerini tutar.
-- **FCFS:** Süreçleri geliş sırasına göre çalıştırır.
-- **SJF:** Hazır süreçler arasından çalışma süresi en kısa olanı seçer.
-- **Round Robin:** Süreçleri belirlenen zaman dilimlerine göre çalıştırır.
-- **Gantt Chart:** Süreçlerin çalışma zaman aralıklarını gösteren veri üretir.
-- **Performans Metrikleri:** Tamamlanma zamanı (CT), dönüş süresi (TAT), bekleme süresi (WT) ve yanıt süresi (RT) hesaplanır.
+## 🚀 Öne Çıkan Özellikler
 
-Proje geliştirme aşamasındadır. Özelliklerin entegrasyonu ve testleri devam etmektedir.
+* **5 Temel CPU Zamanlama Algoritması:**
+  * **FCFS** (First Come First Served — İlk Gelen İlk Hizmet Alır)
+  * **SJF** (Shortest Job First — Kesintisiz En Kısa İş Önce)
+  * **SRTF** (Shortest Remaining Time First — Kesintili / Preemptive SJF)
+  * **Priority Scheduling** (Öncelik Tabanlı Zamanlama)
+  * **Round Robin** (Ayarlanabilir Time Quantum ile Zaman Paylaşımlı)
+* **3 Farklı Veri Kaynağı Modu:**
+  1. **Manuel Süreç Listesi:** Tarayıcı üzerinden düzenlenebilir süreç tablosu.
+  2. **Canlı Bilgisayar Süreçleri (Gerçek OS):** Bilgisayarda çalışan gerçek uygulamaların (PID ve CPU süreleri) anlık çekilmesi.
+  3. **Rastgele OS Yükü:** Stres testi için otomatik süreç üretimi.
+* **Etkileşimli Görsel Arayüz (Streamlit + Plotly):** Renkli Gantt şeması, Context Switch (Bağlam Değiştirme) maliyeti analizi, CPU kullanım oranı ve 5 algoritmanın yan yana performans kıyaslaması.
 
-## Gereksinimler
+---
 
-- Python 3.10 veya üzeri
-- Git
+## 🛠️ Kurulum ve Çalıştırma
 
-Harici Python kütüphanesi gerekmemektedir.
-
-## Kurulum
-
-Depoyu klonlayın:
-
+### 1. Depoyu Klonlayın
 ```bash
-git clone https://github.com/BeyzaBektas25/cpu-scheduling-simulator.git
+git clone https://github.com
 cd cpu-scheduling-simulator
 ```
 
-## Çalıştırma
+### 2. Gerekli Kütüphaneleri Kurun
+```bash
+pip install -r requirements.txt
+```
 
-Projenin ana dizininde şu komutu çalıştırın:
+### 3. Görsel Web Simülatörünü Başlatın (Önerilen)
+```bash
+streamlit run app.py
+```
+*(Tarayıcınızda otomatik olarak `http://localhost:8501` adresinde simülatör paneli açılacaktır).*
 
+### 4. Terminal Üzerinden Çalıştırma (CLI Modu)
 ```bash
 python main.py
 ```
 
-Program, örnek süreçleri SJF algoritmasıyla çalıştırır ve süreç metrikleriyle Gantt çizelgesi verisini terminalde gösterir.
+---
 
-## Testleri Çalıştırma
+## 🧪 Birim Testlerini (Unit Tests) Çalıştırma
 
-Birim testlerini çalıştırmak için:
-
+Tüm algoritmaların `CT`, `TAT`, `WT` ve `RT` hesaplamalarını doğrulamak için:
 ```bash
 python -m unittest discover -s tests -v
 ```
 
-Testlerin başarılı olması için mevcut test dosyalarının doğru yapılandırılmış olması gerekir.
+---
 
-## Proje Yapısı
+## 📁 Proje Klasör Yapısı
 
 ```text
 cpu-scheduling-simulator/
 ├── src/
 │   └── models/
-│       ├── process.py
-│       ├── fcfs.py
-│       ├── sjf.py
-│       └── round_robin.py
+│       ├── process.py          # Süreç (PCB) modeli ve metrik hesaplamaları
+│       ├── fcfs.py             # FCFS algoritması
+│       ├── sjf.py              # SJF algoritması
+│       ├── srtf.py             # SRTF (Preemptive SJF) algoritması
+│       ├── priority.py         # Priority Scheduling algoritması
+│       └── round_robin.py      # Round Robin algoritması
 ├── tests/
-├── main.py
-├── README.md
-└── .gitignore
+│   ├── srtf_test.py            # SRTF birim testleri
+│   └── test_all_algorithms.py  # Tüm algoritmaların kapsamlı test paketi
+├── app.py                      # Streamlit görsel web arayüzü ve canlı OS modülü
+├── main.py                     # Komut satırı (CLI) çalıştırma dosyası
+├── requirements.txt            # Python bağımlılıkları
+└── README.md                   # Proje dokümantasyonu
 ```
-
-## Geliştirme Ekibi
-
-Proje, İşletim Sistemleri dersi kapsamında üç kişilik bir ekip tarafından geliştirilmektedir.
-
-## Lisans
-
-Bu proje eğitim ve öğrenme amacıyla geliştirilmektedir.
-

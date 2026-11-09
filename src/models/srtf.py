@@ -1,3 +1,5 @@
+from src.models.process import Process
+
 def run_srtf(process_list):
     """
     Preemptive SJF (Shortest Remaining Time First / SRTF) CPU Scheduling simülasyonu.
